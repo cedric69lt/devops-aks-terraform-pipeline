@@ -17,8 +17,8 @@ terraform {
      }
 
     backend "azurerm" {
-    # resource_group_name = "storageAccount-RG"
-    # storage_account_name = "backendstorageaccount20"
+    # resource_group_name = "vm_group"
+    # storage_account_name = "storageaccountcpascal"
     # container_name = "tfstate"
     # key = "terraform-custom-vnet.tfstate"
      
