@@ -31,10 +31,10 @@ stages:
              command: 'init'
              workingDirectory: '$(System.DefaultWorkingDirectory)/terraform-manifests'
              backendType: 'azurerm'
-             backendServiceArm: 'azuredevops-azureRM-svc'
-             backendAzureRmResourceGroupName: 'aks-rg-sa'
-             backendAzureRmStorageAccountName: 'terraformstatefileaccoun'
-             backendAzureRmContainerName: 'tfstate'
+             backendServiceArm: 'ServicePrincipalConnection'
+             backendAzureRmResourceGroupName: 'vm_group'
+             backendAzureRmStorageAccountName: 'storageaccountcpascal'
+             backendAzureRmContainerName: 'containerced'
              backendAzureRmKey: 'aks-test.tfstate'
              allowTelemetryCollection: false
          - task: TerraformCLI@0
@@ -62,24 +62,24 @@ stages:
                 command: 'init'
                 workingDirectory: '$(Pipeline.Workspace)/published-artifacts'
                 backendType: 'azurerm'
-                backendServiceArm: 'azuredevops-azureRM-svc'
-                backendAzureRmResourceGroupName: 'aks-rg-sa'
-                backendAzureRmStorageAccountName: 'terraformstatefileaccoun'
-                backendAzureRmContainerName: 'tfstate'
+                backendServiceArm: 'ServicePrincipalConnection'
+                backendAzureRmResourceGroupName: 'vm_group'
+                backendAzureRmStorageAccountName: 'storageaccountcpascal'
+                backendAzureRmContainerName: 'containerced'
                 backendAzureRmKey: 'aks-$(DEV_ENVIRONMENT).tfstate'
                 allowTelemetryCollection: false
             - task: TerraformCLI@0
               inputs:
                 command: 'plan'
                 workingDirectory: '$(Pipeline.Workspace)/published-artifacts'
-                environmentServiceName: 'azuredevops-azureRM-svc'
+                environmentServiceName: 'ServicePrincipalConnection'
                 commandOptions: '-var ssh_public_key=$(sshkey.secureFilePath) -out $(Pipeline.Workspace)/published-artifacts/$(DEV_ENVIRONMENT)-$(Build.BuildId).out -var environment=$(DEV_ENVIRONMENT)'
                 allowTelemetryCollection: false
             - task: TerraformCLI@0
               inputs:
                 command: 'apply'
                 workingDirectory: '$(Pipeline.Workspace)/published-artifacts'
-                environmentServiceName: 'azuredevops-azureRM-svc'
+                environmentServiceName: 'ServicePrincipalConnection'
                 commandOptions: '$(Pipeline.Workspace)/published-artifacts/$(DEV_ENVIRONMENT)-$(Build.BuildId).out'
                 allowTelemetryCollection: false
             
