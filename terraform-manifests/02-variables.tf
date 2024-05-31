@@ -9,7 +9,7 @@
 # 3. Azure AKS Environment Name (Dev, QA, Prod)
 
 variable "location" {
-  default = "eastus"
+  default = "francecentral"
   description = "This will be location all resources will be created."
   type = string
   
